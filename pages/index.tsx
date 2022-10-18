@@ -1,56 +1,47 @@
-import {useEffect} from 'react';
-import type {GetServerSideProps, NextPage} from 'next';
+import React, {useEffect} from 'react';
+import type {NextPage} from 'next';
 import Head from 'next/head';
+import {useRouter} from 'next/router';
 import Link from 'next/link';
-import {signOut, useSession, getSession} from 'next-auth/react';
+import {useSession} from 'next-auth/react';
 
 const Home: NextPage = () => {
   const {data: session} = useSession();
+  const {pathname} = useRouter();
 
   useEffect(() => {
-    if (session == null) return;
+    if (session === null) {
+      window.location.href = '/auth/signin';
+    }
   }, [session]);
 
+  const categoriesTab = pathname === '/categories' ? 'tab-active' : '';
+  const pagesTab = pathname === '/pages' ? 'tab-active' : '';
+  const companiesTab = pathname === '/companies' ? 'tab-active' : '';
+
   return (
-    <div>
+    <>
       <Head>
-        <title>Strapi - Next - NextAuth</title>
+        <title>Admin</title>
       </Head>
 
-      <h1>{session ? 'Authenticated' : 'Not Authenticated'}</h1>
-      {session && (
-        <div style={{marginBottom: 10}}>
-          <h3>Session Data</h3>
-          <div>Email: {session?.user?.email}</div>
-          <div>JWT from Strapi: Check console</div>
+      <header className="flex items-center justify-between py-8">
+        <h1 className="text-grey text-xl font-medium">Admin</h1>
+
+        <div className="flex items-center gap-4 font-medium">
+          <Link href="/categories">
+            <a className={`tab ${categoriesTab}`}>25 Categories</a>
+          </Link>
+          <Link href="/pages">
+            <a className={`tab ${pagesTab}`}>254 Pages</a>
+          </Link>
+          <Link href="/companies">
+            <a className={`tab ${companiesTab}`}>23 Companies</a>
+          </Link>
         </div>
-      )}
-      {session ? (
-        <button onClick={() => signOut({callbackUrl: '/auth'})}>
-          Sign out
-        </button>
-      ) : (
-        <Link href="/auth">
-          <button>Sign In</button>
-        </Link>
-      )}
-    </div>
+      </header>
+    </>
   );
 };
 
 export default Home;
-
-export const getServerSideProps: GetServerSideProps = async context => {
-  const session = await getSession(context);
-  if (session == null) {
-    return {
-      redirect: {
-        destination: '/auth',
-        permanent: true,
-      },
-    };
-  }
-  return {
-    props: {},
-  };
-};

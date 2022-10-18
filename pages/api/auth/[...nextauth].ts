@@ -1,11 +1,11 @@
-import NextAuth from 'next-auth';
+import NextAuth, {NextAuthOptions} from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import {signIn} from '../../../services/auth';
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: 'Sign in with Email',
+      name: 'Sign in with Username and Password',
       credentials: {
         username: {label: 'Username', type: 'text'},
         password: {label: 'Password', type: 'password'},
@@ -39,4 +39,9 @@ export default NextAuth({
       return Promise.resolve(token);
     },
   },
-});
+  pages: {
+    signIn: '/auth/signin',
+  },
+};
+
+export default NextAuth(authOptions);

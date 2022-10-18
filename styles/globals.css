@@ -11,7 +11,7 @@ html {
 @layer components {
   input,
   textarea {
-    @apply font-medium text-grey placeholder:text-body h-14 rounded-lg px-4 bg-white-200 focus-visible:outline-blue focus-within:outline-blue;
+    @apply font-medium text-grey placeholder:text-body h-13 rounded-lg px-4 bg-white-200 focus-visible:outline-blue focus-within:outline-blue;
   }
 
   label {
@@ -19,6 +19,14 @@ html {
   }
 
   button {
-    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply hover:opacity-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .tab {
+    @apply flex items-center px-4 text-body bg-white-200 rounded-full outline outline-1 outline-body h-13 hover:outline-blue hover:text-blue;
+  }
+
+  .tab-active {
+    @apply outline-blue text-blue;
   }
 }

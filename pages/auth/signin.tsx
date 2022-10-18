@@ -18,7 +18,7 @@ const Auth: NextPage = () => {
       password: e.currentTarget.password.value,
     });
     if (result?.ok) {
-      router.replace('/');
+      router.push('/');
       setDisabled(false);
       return;
     }
