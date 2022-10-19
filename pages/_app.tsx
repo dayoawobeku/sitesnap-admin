@@ -1,25 +1,40 @@
-import '../styles/globals.css';
+import React, {useState} from 'react';
 import type {AppProps} from 'next/app';
 import {SessionProvider} from 'next-auth/react';
 import {Session} from 'next-auth';
 import Layout from '../components/Layout';
-import React from 'react';
+import {QueryClientProvider, QueryClient} from '@tanstack/react-query';
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
+import '../styles/globals.css';
 
 function MyApp({
   Component,
   pageProps,
   ...appProps
 }: AppProps<{session: Session}>) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
   const isLayoutNeeded = ['/auth/signin'].includes(appProps.router.pathname);
 
   const LayoutComponent = !isLayoutNeeded ? Layout : React.Fragment;
 
   return (
-    <SessionProvider session={pageProps.session}>
-      <LayoutComponent>
-        <Component {...pageProps} />
-      </LayoutComponent>
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider session={pageProps.session}>
+        <LayoutComponent>
+          <Component {...pageProps} />
+        </LayoutComponent>
+      </SessionProvider>
+      <ReactQueryDevtools initialIsOpen />
+    </QueryClientProvider>
   );
 }
 

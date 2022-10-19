@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const strapiUrl = process.env.STRAPI_URL;
+const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 interface UserCredentials {
   username: string;
@@ -8,7 +8,7 @@ interface UserCredentials {
 }
 
 export async function signIn({username, password}: UserCredentials) {
-  const res = await axios.post(`${strapiUrl}/api/auth/local`, {
+  const res = await axios.post(`${strapiUrl}/auth/local`, {
     identifier: username,
     password,
   });
