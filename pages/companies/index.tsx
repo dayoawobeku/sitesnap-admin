@@ -16,8 +16,6 @@ interface Company {
 const Companies: NextPage = () => {
   const {data: companies} = useCompanies();
 
-  console.log(companies);
-
   return (
     <>
       <Head>

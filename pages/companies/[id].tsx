@@ -13,6 +13,7 @@ interface Slug {
 
 interface Page {
   type: string;
+  url: string;
 }
 
 const Company: NextPage = () => {
@@ -20,8 +21,12 @@ const Company: NextPage = () => {
   const {data: company, isLoading: loadingCompany} = useCompany(
     router.query.id,
   );
-  const {data: pages, isLoading: loadingPages} = usePages(router.query.id);
-  const pagesArray = pages?.data[0]?.attributes.pages.page;
+
+  const companyId = company?.data?.[0]?.id;
+
+  const {data: pages, isLoading: loadingPages} = usePages(companyId);
+
+  const pagesArray = pages?.data?.attributes.pages;
 
   return (
     <>
@@ -79,12 +84,17 @@ function useCompany(slug: Slug['slug']) {
   );
 }
 
-function usePages(slug: Slug['slug']) {
-  return useQuery([`pages-${slug}`], () =>
-    axios
-      .get(
-        `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies?filters[slug][$eq]=${slug}&fields=pages`,
-      )
-      .then(res => res.data),
+function usePages(companyId: string) {
+  return useQuery(
+    [`pages-${companyId}`, companyId],
+    () =>
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies/${companyId}?populate=*`,
+        )
+        .then(res => res.data),
+    {
+      enabled: !!companyId,
+    },
   );
 }

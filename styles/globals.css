@@ -10,8 +10,18 @@ html {
 
 @layer components {
   input,
-  textarea {
-    @apply font-medium text-grey placeholder:text-body h-13 rounded-lg px-4 bg-white-200 focus-visible:outline-blue focus-within:outline-blue;
+  textarea,
+  select {
+    @apply font-medium text-grey placeholder:text-body rounded-lg px-4 bg-white-200 h-14 focus-visible:outline-blue focus-within:outline-blue;
+  }
+
+  select,
+  option {
+    @apply text-body;
+  }
+
+  select {
+    @apply h-14 bg-[url('../assets/images/caret-down.svg')] bg-white-200 bg-no-repeat appearance-none bg-[center_right_1rem];
   }
 
   label {
@@ -23,10 +33,16 @@ html {
   }
 
   .tab {
-    @apply flex items-center px-4 text-body bg-white-200 rounded-full outline outline-1 outline-body h-13 hover:outline-blue hover:text-blue;
+    @apply flex items-center px-4 text-body bg-white-200 rounded-full outline outline-1 outline-body h-13 hover:outline-blue hover:text-blue focus-visible:outline-blue focus-within:outline-blue;
   }
 
   .tab-active {
     @apply outline-blue text-blue;
+  }
+
+  #upload-photo {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
   }
 }
