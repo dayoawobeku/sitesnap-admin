@@ -3,8 +3,7 @@ import type {NextPage} from 'next';
 import Head from 'next/head';
 import {useSession} from 'next-auth/react';
 import SubNav from '../components/SubNav';
-import Image from 'next/image';
-import {upload} from '../assets/images/images';
+import ImageTest from '../components/ImageTest';
 
 const Home: NextPage = () => {
   const {data: session} = useSession();
@@ -64,80 +63,7 @@ const Home: NextPage = () => {
           Add a new category
         </button>
 
-        <div className="mt-8 flex flex-col gap-14">
-          <div>
-            <div className="flex gap-4 basis-full">
-              <label
-                htmlFor="upload-photo"
-                className="basis-[48.25%] flex items-center gap-2 pl-4 outline-1 outline-dashed outline-body rounded-lg cursor-pointer"
-              >
-                <Image alt="" src={upload} width={20} height={20} />
-                <span className="text-body">Upload image</span>
-              </label>
-              <input
-                type="file"
-                name="photo"
-                id="upload-photo"
-                accept="image/*"
-                className="basis-[48.25%] "
-              />
-              <select
-                id="category"
-                defaultValue={'DEFAULT'}
-                required
-                className="basis-[51.75%]"
-              >
-                <option value="DEFAULT" disabled>
-                  Page category
-                </option>
-                <option value="">Category 1</option>
-                <option value="">Category 2</option>
-                <option value="">Category 3</option>
-              </select>
-            </div>
-            <textarea
-              className="w-full mt-4 py-4 h-20 flex"
-              placeholder="Page description (optional)"
-              id="page-description"
-            />
-          </div>
-          <div>
-            <div className="flex gap-4 basis-full">
-              <label
-                htmlFor="upload-photo"
-                className="basis-[48.25%] flex items-center gap-2 pl-4 outline-1 outline-dashed outline-body rounded-lg cursor-pointer"
-              >
-                <Image alt="" src={upload} width={20} height={20} />
-                <span className="text-body">Upload image</span>
-              </label>
-              <input
-                type="file"
-                name="photo"
-                id="upload-photo"
-                accept="image/*"
-                className="basis-[48.25%]"
-              />
-              <select
-                id="category"
-                defaultValue={'DEFAULT'}
-                required
-                className="basis-[51.75%]"
-              >
-                <option value="DEFAULT" disabled>
-                  Page category
-                </option>
-                <option value="">Category 1</option>
-                <option value="">Category 2</option>
-                <option value="">Category 3</option>
-              </select>
-            </div>
-            <textarea
-              className="w-full mt-4 py-4 h-20 flex"
-              placeholder="Page description (optional)"
-              id="page-description"
-            />
-          </div>
-        </div>
+        <ImageTest />
 
         <div className="mt-8 flex basis-full gap-2 h-14">
           <button className="basis-[25.71%] flex items-center justify-center bg-white-200 text-body font-medium rounded-lg">
@@ -146,6 +72,9 @@ const Home: NextPage = () => {
           <button className="basis-[74.29%] bg-blue text-white font-medium rounded-lg">
             Save company
           </button>
+          <form>
+            <p>oom</p>
+          </form>
         </div>
       </form>
     </>

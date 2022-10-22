@@ -5,6 +5,7 @@ import Image from 'next/image';
 import {useQuery} from '@tanstack/react-query';
 import axios from 'axios';
 import SubNav from '../../components/SubNav';
+import ImageTest from '../../components/ImageTest';
 import {filler} from '../../assets/images/images';
 
 interface Slug {
@@ -12,8 +13,9 @@ interface Slug {
 }
 
 interface Page {
-  type: string;
-  url: string;
+  page_name: string;
+  page_url: string;
+  id: number;
 }
 
 const Company: NextPage = () => {
@@ -22,11 +24,7 @@ const Company: NextPage = () => {
     router.query.id,
   );
 
-  const companyId = company?.data?.[0]?.id;
-
-  const {data: pages, isLoading: loadingPages} = usePages(companyId);
-
-  const pagesArray = pages?.data?.attributes.pages;
+  const pagesArray = company?.data[0]?.attributes?.pages;
 
   return (
     <>
@@ -48,11 +46,13 @@ const Company: NextPage = () => {
       />
 
       <section className="mt-14 grid grid-cols-2 gap-x-12">
-        {loadingPages
+        {loadingCompany
           ? '...'
           : pagesArray?.map((page: Page) => (
-              <article key={page.type} className="flex flex-col gap-5 py-14">
-                <h2 className="text-md font-medium text-grey">{page?.type}</h2>
+              <article key={page.id} className="flex flex-col gap-5 py-14">
+                <h2 className="text-md font-medium text-grey">
+                  {page?.page_name}
+                </h2>
                 <div className="relative">
                   <Image
                     alt="wise"
@@ -68,6 +68,8 @@ const Company: NextPage = () => {
               </article>
             ))}
       </section>
+
+      {/* <ImageTest /> */}
     </>
   );
 };
@@ -81,20 +83,5 @@ function useCompany(slug: Slug['slug']) {
         `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies?filters[slug][$eq]=${slug}`,
       )
       .then(res => res.data),
-  );
-}
-
-function usePages(companyId: string) {
-  return useQuery(
-    [`pages-${companyId}`, companyId],
-    () =>
-      axios
-        .get(
-          `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies/${companyId}?populate=*`,
-        )
-        .then(res => res.data),
-    {
-      enabled: !!companyId,
-    },
   );
 }
