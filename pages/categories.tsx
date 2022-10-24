@@ -41,16 +41,7 @@ const Categories: NextPage = () => {
         <title>Categories</title>
       </Head>
 
-      <SubNav
-        customHeading={
-          <div className="flex items-center gap-4">
-            <h1 className="text-grey text-xl font-medium">Categories</h1>
-            <button className="h-14 bg-white-200 px-5 rounded-lg text-body font-medium">
-              Add a new category
-            </button>
-          </div>
-        }
-      />
+      <SubNav text="Categories" />
 
       <section className="mt-8 flex">
         {sortedIndustries?.map(

@@ -1,12 +1,12 @@
 import type {NextPage} from 'next';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
+import Link from 'next/link';
 import Image from 'next/image';
 import {useQuery} from '@tanstack/react-query';
 import axios from 'axios';
-import SubNav from '../../components/SubNav';
-import ImageTest from '../../components/ImageTest';
-import {filler} from '../../assets/images/images';
+import SubNav from '../../../components/SubNav';
+import {filler} from '../../../assets/images/images';
 
 interface Slug {
   slug: string | string[] | undefined;
@@ -34,13 +34,18 @@ const Company: NextPage = () => {
 
       <SubNav
         customHeading={
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <h1 className="text-grey text-xl font-medium">
               {loadingCompany ? '-' : company.data[0]?.attributes.name}
             </h1>
-            <button className="h-14 bg-white-200 px-5 rounded-lg text-body font-medium">
-              Add a new page
-            </button>
+            <div className="text-white font-medium bg-blue rounded-full px-4 py-2">
+              {loadingCompany ? '-' : company.data[0]?.attributes.industry}
+            </div>
+            <Link href={`/companies/${router.query.id}/edit-company`}>
+              <a className="flex items-center h-14 bg-white-200 px-5 rounded-lg text-body font-medium">
+                Edit
+              </a>
+            </Link>
           </div>
         }
       />
@@ -68,8 +73,6 @@ const Company: NextPage = () => {
               </article>
             ))}
       </section>
-
-      {/* <ImageTest /> */}
     </>
   );
 };
