@@ -1,10 +1,28 @@
 import type {NextPage} from 'next';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import {useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery} from '@tanstack/react-query';
 import axios from 'axios';
 import SubNav from '../../../components/SubNav';
-import ImageTest from '../../../components/ImageTest';
+import ImageUpload from '../../../components/ImageUpload';
+import {useEffect, useState} from 'react';
+
+const PAGES = [
+  {value: 'Landing page', label: 'Landing page'},
+  {value: 'About page', label: 'About page'},
+  {value: 'Contact page', label: 'Contact page'},
+];
+
+const INDUSTRIES = [
+  {value: 'Fintech', label: 'Fintech'},
+  {value: 'Healthtech', label: 'Healthtech'},
+  {value: 'Onboarding', label: 'Onboarding'},
+];
+
+interface File {
+  page_description: string;
+  page_name: string;
+}
 
 interface Slug {
   slug: string | string[] | undefined;
@@ -12,9 +30,69 @@ interface Slug {
 
 const EditCompany: NextPage = () => {
   const router = useRouter();
-  const {data: company, isLoading: loadingCompany} = useCompany(
-    router.query.id,
-  );
+  const [companyName, setCompanyName] = useState('');
+  const [companyUrl, setCompanyUrl] = useState('');
+  const [companyDescription, setCompanyDescription] = useState('');
+
+  const {data: company, status} = useCompany(router.query.id);
+  const companyId = company?.data[0]?.id;
+  const {mutate: editCompany} = useEditCompany(companyId);
+  const [dynamicallyGeneratedFiles, setDGF] = useState([]);
+  const [selectedIndustry, setSelectedIndustry] = useState(INDUSTRIES[0]);
+
+  console.log(dynamicallyGeneratedFiles, 'dynamicallyGeneratedFiles');
+
+  useEffect(() => {
+    const dataFromApi =
+      status === 'success' ? company?.data[0]?.attributes?.pages : [];
+
+    const files = dataFromApi?.map((file: File) => {
+      return {
+        ...file,
+        page_description: file.page_description || '',
+        page_name: file.page_name || '',
+      };
+    });
+
+    setDGF(files);
+
+    console.log(files, 'files');
+
+    setSelectedIndustry({
+      value: company?.data[0]?.attributes?.industry,
+      label: company?.data[0]?.attributes?.industry,
+    });
+  }, [company?.data, status]);
+
+  const handleSubmit = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const data = {
+      name: companyName || company?.data[0]?.attributes?.name,
+      url: companyUrl || company?.data[0]?.attributes?.url,
+      description:
+        companyDescription || company?.data[0]?.attributes?.description,
+      industry:
+        selectedIndustry.value || company?.data[0]?.attributes?.industry,
+      pages: dynamicallyGeneratedFiles || company?.data[0]?.attributes?.pages,
+    };
+
+    editCompany(
+      {data: data},
+      {
+        onSuccess: res => {
+          setCompanyName('');
+          setCompanyUrl('');
+          setCompanyDescription('');
+          console.log(res, 'res');
+        },
+        onError: res => {
+          // setMessage(res);
+          console.log(res);
+        },
+      },
+    );
+  };
 
   return (
     <>
@@ -22,51 +100,67 @@ const EditCompany: NextPage = () => {
         <title>Edit company</title>
       </Head>
 
-      <SubNav text={loadingCompany ? '-' : company?.data[0]?.attributes.name} />
+      <SubNav text={company?.data[0]?.attributes.name ?? '-'} />
 
-      <div className="mt-8 max-w-[630px] mx-auto mb-14">
-        <h2 className="text-grey text-md font-medium">Edit company</h2>
-        <div className="flex gap-4 mt-8 basis-full">
+      <div className="mx-auto mt-8 mb-14 max-w-[630px]">
+        <h2 className="text-md font-medium text-grey">Edit company</h2>
+        <div className="mt-8 flex basis-full gap-4">
           <input
             type="text"
             className="basis-[56.98%]"
             placeholder="Company name"
             id="companyName"
-            defaultValue={
-              loadingCompany ? '-' : company?.data[0]?.attributes.name
-            }
+            defaultValue={company?.data[0]?.attributes.name ?? '-'}
+            onChange={e => setCompanyName(e.target.value)}
           />
           <input
-            type="text"
+            type="url"
             className="basis-[43.02%]"
             placeholder="URL"
             id="url"
-            defaultValue={
-              loadingCompany ? '-' : company?.data[0]?.attributes.url
-            }
+            defaultValue={company?.data[0]?.attributes.url ?? '-'}
+            onChange={e => setCompanyUrl(e.target.value)}
           />
         </div>
         <textarea
-          className="w-full mt-4 py-4 h-60 flex"
+          className="mt-4 flex h-60 w-full py-4"
           placeholder="Company description"
           id="description"
-          defaultValue={
-            loadingCompany ? '-' : company?.data[0]?.attributes.description
-          }
+          defaultValue={company?.data[0]?.attributes.description ?? '-'}
+          onChange={e => setCompanyDescription(e.target.value)}
         />
-        <select id="category" defaultValue={'DEFAULT'} className="w-full mt-4">
+        <select
+          id="category"
+          onChange={e =>
+            setSelectedIndustry({
+              value: e.target.value,
+              label: e.target.value,
+            })
+          }
+          defaultValue={company?.data[0]?.attributes.industry ?? '-'}
+          className="mt-4 w-full"
+        >
           <option value="DEFAULT" disabled>
             Category (Industry)
           </option>
-          <option value="">Category 1</option>
-          <option value="">Category 2</option>
-          <option value="">Category 3</option>
+          {INDUSTRIES.map(industry => (
+            <option key={industry.value} value={industry.value}>
+              {industry.label}
+            </option>
+          ))}
         </select>
 
-        <ImageTest />
+        <ImageUpload
+          PAGES={PAGES}
+          dynamicallyGeneratedFiles={dynamicallyGeneratedFiles}
+          setDGF={setDGF}
+        />
 
-        <div className="mt-8 flex basis-full gap-2 h-14">
-          <button className="basis-full bg-blue text-white font-medium rounded-lg">
+        <div className="mt-8 flex h-14 basis-full gap-2">
+          <button
+            className="basis-full rounded-lg bg-blue font-medium text-white"
+            onClick={handleSubmit}
+          >
             Save changes
           </button>
         </div>
@@ -78,11 +172,24 @@ const EditCompany: NextPage = () => {
 export default EditCompany;
 
 function useCompany(slug: Slug['slug']) {
-  return useQuery([`company-${slug}`], () =>
+  return useQuery(
+    [`company-${slug}`],
+    () =>
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies?filters[slug][$eq]=${slug}`,
+        )
+        .then(res => res.data),
+    {
+      enabled: !!slug,
+    },
+  );
+}
+
+function useEditCompany(id: Slug['slug']) {
+  return useMutation((values: object) =>
     axios
-      .get(
-        `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies?filters[slug][$eq]=${slug}`,
-      )
+      .put(`${process.env.NEXT_PUBLIC_STRAPI_URL}/companies/${id}`, values)
       .then(res => res.data),
   );
 }

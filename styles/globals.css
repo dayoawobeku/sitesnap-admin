@@ -40,9 +40,7 @@ html {
     @apply outline-blue text-blue;
   }
 
-  #upload-photo {
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
+  .grey-btn {
+    @apply outline outline-1 outline-white-200 hover:outline-blue transition-all;
   }
 }

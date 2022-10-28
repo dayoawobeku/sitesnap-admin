@@ -36,9 +36,9 @@ const Home: NextPage = () => {
       <SubNav
         customHeading={
           <div className="flex items-center gap-6">
-            <h1 className="text-grey text-xl font-medium">All companies</h1>
+            <h1 className="text-xl font-medium text-grey">All companies</h1>
             <Link href="/add-company">
-              <a className="flex items-center h-14 bg-white-200 px-5 rounded-lg text-body font-medium">
+              <a className="grey-btn flex h-14 items-center rounded-lg bg-white-200 px-5 font-medium text-body">
                 Add a new company
               </a>
             </Link>

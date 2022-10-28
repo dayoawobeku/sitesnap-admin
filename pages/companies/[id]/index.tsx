@@ -35,14 +35,14 @@ const Company: NextPage = () => {
       <SubNav
         customHeading={
           <div className="flex items-center gap-6">
-            <h1 className="text-grey text-xl font-medium">
+            <h1 className="text-xl font-medium text-grey">
               {loadingCompany ? '-' : company.data[0]?.attributes.name}
             </h1>
-            <div className="text-white font-medium bg-blue rounded-full px-4 py-2">
+            <div className="rounded-full bg-blue px-4 py-2 font-medium text-white">
               {loadingCompany ? '-' : company.data[0]?.attributes.industry}
             </div>
             <Link href={`/companies/${router.query.id}/edit-company`}>
-              <a className="flex items-center h-14 bg-white-200 px-5 rounded-lg text-body font-medium">
+              <a className="flex h-14 items-center rounded-lg bg-white-200 px-5 font-medium text-body">
                 Edit
               </a>
             </Link>
