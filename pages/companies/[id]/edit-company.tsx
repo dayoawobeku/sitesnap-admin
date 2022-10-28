@@ -37,7 +37,14 @@ const EditCompany: NextPage = () => {
   const {data: company, status} = useCompany(router.query.id);
   const companyId = company?.data[0]?.id;
   const {mutate: editCompany} = useEditCompany(companyId);
-  const [dynamicallyGeneratedFiles, setDGF] = useState([]);
+  const [dynamicallyGeneratedFiles, setDGF] = useState([
+    {
+      name: 'file-1',
+      previewSrc: '',
+      page_name: 'Landing page',
+      page_description: '',
+    },
+  ]);
   const [selectedIndustry, setSelectedIndustry] = useState(INDUSTRIES[0]);
 
   console.log(dynamicallyGeneratedFiles, 'dynamicallyGeneratedFiles');
@@ -56,7 +63,7 @@ const EditCompany: NextPage = () => {
 
     setDGF(files);
 
-    console.log(files, 'files');
+    console.log(files);
 
     setSelectedIndustry({
       value: company?.data[0]?.attributes?.industry,

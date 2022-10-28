@@ -14,7 +14,7 @@ export default function ImageUpload({
           name: 'file-' + (prev.length + 1),
           previewSrc: '',
           page_description: '',
-          page_name: PAGES[0].value,
+          page_name: PAGES[0].value || '',
         },
       ];
     });
@@ -104,11 +104,11 @@ export default function ImageUpload({
         return {
           ...file,
           image_url: response?.data.secure_url,
-          page_name: file.page_name,
-          page_description: file.page_description,
+          page_name: file.page_name || PAGES[0].value,
+          page_description: file.page_description || '',
           id: response?.data.public_id,
           name: response?.data.original_filename,
-          previewSrc: response?.data.secure_url,
+          previewSrc: response?.data.secure_url || '',
         };
       }
     });
