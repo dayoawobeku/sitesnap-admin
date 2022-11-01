@@ -1,9 +1,8 @@
 import type {NextPage} from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import {useQuery} from '@tanstack/react-query';
-import axios from 'axios';
 import SubNav from '../../components/SubNav';
+import {useCompanies} from '../../hooks';
 
 interface Company {
   id: string;
@@ -41,11 +40,3 @@ const Companies: NextPage = () => {
 };
 
 export default Companies;
-
-function useCompanies() {
-  return useQuery(['companies'], () =>
-    axios
-      .get(`${process.env.NEXT_PUBLIC_STRAPI_URL}/companies`)
-      .then(res => res.data),
-  );
-}

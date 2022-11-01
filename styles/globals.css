@@ -12,7 +12,7 @@ html {
   input,
   textarea,
   select {
-    @apply font-medium text-grey placeholder:text-body rounded-lg px-4 bg-white-200 h-14 focus-visible:outline-blue focus-within:outline-blue;
+    @apply h-14 rounded-lg bg-white-200 px-4 font-medium text-grey outline outline-[2.5px] outline-white-200 placeholder:text-body focus-within:outline-blue focus-visible:outline-blue;
   }
 
   select,
@@ -21,7 +21,7 @@ html {
   }
 
   select {
-    @apply h-14 bg-[url('../assets/images/caret-down.svg')] bg-white-200 bg-no-repeat appearance-none bg-[center_right_1rem];
+    @apply h-14 appearance-none bg-white-200 bg-[url('../assets/images/caret-down.svg')] bg-[center_right_1rem] bg-no-repeat;
   }
 
   label {
@@ -29,18 +29,18 @@ html {
   }
 
   button {
-    @apply hover:opacity-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .tab {
-    @apply flex items-center px-4 text-body bg-white-200 rounded-full outline outline-1 outline-body h-13 hover:outline-blue hover:text-blue focus-visible:outline-blue focus-within:outline-blue;
+    @apply flex h-13 items-center rounded-full bg-white-200 px-4 text-body outline outline-1 outline-body focus-within:outline-blue hover:text-blue hover:outline-blue focus-visible:outline-blue;
   }
 
   .tab-active {
-    @apply outline-blue text-blue;
+    @apply text-blue outline-blue;
   }
 
   .grey-btn {
-    @apply outline outline-1 outline-white-200 hover:outline-blue transition-all;
+    @apply outline outline-1 outline-white-200 transition-all hover:outline-blue;
   }
 }

@@ -4,10 +4,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import {useSession} from 'next-auth/react';
-import {useQuery} from '@tanstack/react-query';
-import axios from 'axios';
 import SubNav from '../components/SubNav';
 import {filler} from '../assets/images/images';
+import {useCompanies} from '../hooks';
 
 interface Company {
   id: string;
@@ -81,11 +80,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-function useCompanies() {
-  return useQuery(['companies'], () =>
-    axios
-      .get(`${process.env.NEXT_PUBLIC_STRAPI_URL}/companies`)
-      .then(res => res.data),
-  );
-}

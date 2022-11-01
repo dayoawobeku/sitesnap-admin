@@ -3,19 +3,14 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
-import {useQuery} from '@tanstack/react-query';
-import axios from 'axios';
 import SubNav from '../../../components/SubNav';
 import {filler} from '../../../assets/images/images';
-
-interface Slug {
-  slug: string | string[] | undefined;
-}
+import {useCompany} from '../../../hooks';
 
 interface Page {
   page_name: string;
   page_url: string;
-  id: number;
+  image_url: string;
 }
 
 const Company: NextPage = () => {
@@ -54,7 +49,10 @@ const Company: NextPage = () => {
         {loadingCompany
           ? '...'
           : pagesArray?.map((page: Page) => (
-              <article key={page.id} className="flex flex-col gap-5 py-14">
+              <article
+                key={page.image_url}
+                className="flex flex-col gap-5 py-14"
+              >
                 <h2 className="text-md font-medium text-grey">
                   {page?.page_name}
                 </h2>
@@ -78,13 +76,3 @@ const Company: NextPage = () => {
 };
 
 export default Company;
-
-function useCompany(slug: Slug['slug']) {
-  return useQuery([`company-${slug}`], () =>
-    axios
-      .get(
-        `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies?filters[slug][$eq]=${slug}`,
-      )
-      .then(res => res.data),
-  );
-}

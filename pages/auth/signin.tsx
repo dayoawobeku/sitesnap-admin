@@ -23,6 +23,7 @@ const Auth: NextPage = () => {
       return;
     }
     alert('Credential is not valid');
+    setDisabled(false);
   }
   return (
     <>
@@ -32,11 +33,11 @@ const Auth: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="max-w-[454px] m-auto text-center pt-40 px-4">
-        <p className="text-blue text-md font-medium">omoui.design</p>
-        <h1 className="my-12 text-grey text-xl font-medium">Admin</h1>
+      <section className="m-auto max-w-[454px] px-4 pt-40 text-center">
+        <p className="text-md font-medium text-blue">omoui.design</p>
+        <h1 className="my-12 text-xl font-medium text-grey">Admin</h1>
 
-        <form onSubmit={onSubmit} className="flex flex-col gap-4 w-full">
+        <form onSubmit={onSubmit} className="flex w-full flex-col gap-4">
           <input
             type="text"
             placeholder="username"
@@ -53,7 +54,7 @@ const Auth: NextPage = () => {
           />
 
           <button
-            className="bg-blue text-white font-medium rounded-lg h-14"
+            className="h-14 rounded-lg bg-blue font-medium text-white"
             disabled={disabled}
           >
             Log in
