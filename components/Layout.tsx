@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {signOut} from 'next-auth/react';
 import Fuse from 'fuse.js';
+const _debounce = require('lodash.debounce');
 import {search} from '../assets/images/images';
 import {useCompanies} from '../hooks';
 import Modal from './Modal';
@@ -53,9 +54,16 @@ export default function Layout({children}: Props) {
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  const fuse = new Fuse(companyTitle, options);
+  const changeHandler = (e: {
+    target: {value: React.SetStateAction<string>};
+  }) => {
+    setSearchTerm(e.target.value);
+  };
 
+  const fuse = new Fuse(companyTitle, options);
   const results = companyTitle ? fuse.search(searchTerm || '') : [];
+
+  const debouncedChangeHandler = _debounce(changeHandler, 1000);
 
   return (
     <div className="mx-auto max-w-[1345px] px-4">
@@ -85,8 +93,7 @@ export default function Layout({children}: Props) {
               id="search"
               className="h-13 w-full max-w-[832px] pl-11 pr-4"
               placeholder="Search"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
+              onChange={debouncedChangeHandler}
             />
             {searchTerm !== '' && results.length > 0 ? (
               <div className="absolute top-[4.75rem] max-h-max w-full max-w-full rounded-lg bg-white-200 p-4 text-blue shadow-lg">
