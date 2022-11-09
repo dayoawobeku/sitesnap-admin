@@ -59,7 +59,7 @@ const Company: NextPage = () => {
                 <div className="relative">
                   <Image
                     alt="wise"
-                    src={filler}
+                    src={loadingCompany ? filler : page?.image_url}
                     width={620}
                     height={411}
                     layout="responsive"

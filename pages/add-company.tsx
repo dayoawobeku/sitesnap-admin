@@ -5,6 +5,7 @@ import {useSession} from 'next-auth/react';
 import SubNav from '../components/SubNav';
 import Form from '../components/Form';
 import {useCreateCompany} from '../hooks';
+import {useRouter} from 'next/router';
 
 interface ErrorMessage {
   message: string;
@@ -13,6 +14,7 @@ interface ErrorMessage {
 
 const AddCompany: NextPage = () => {
   const {data: session} = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (session === null) {
@@ -31,6 +33,7 @@ const AddCompany: NextPage = () => {
       page_name: 'Landing page',
       page_description: '',
       image_url: '',
+      company_name: '',
     },
   ]);
   const [message, setMessage] = useState('');
@@ -50,7 +53,12 @@ const AddCompany: NextPage = () => {
       url: companyData.url,
       description: companyData.description,
       industry: companyData.industry,
-      pages: pages,
+      pages: [
+        ...pages.map(page => ({
+          ...page,
+          company_name: companyData.name,
+        })),
+      ],
       slug: companyData.name.toLowerCase().replace(/ /g, '-'),
     };
 
@@ -58,20 +66,10 @@ const AddCompany: NextPage = () => {
       {data: data},
       {
         onSuccess: () => {
-          setCompanyData({
-            name: '',
-            url: '',
-            description: '',
-            industry: '',
-          });
-          setPages([
-            {
-              page_name: 'Landing page',
-              page_description: '',
-              image_url: '',
-            },
-          ]);
-          setMessage('Company created successfully!');
+          setMessage('Company created successfully');
+          setTimeout(() => {
+            router.push(`/companies/${data.slug}`);
+          }, 2000);
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onError: (error: any) => {

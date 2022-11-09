@@ -12,6 +12,7 @@ interface Pages {
   page_name: string;
   page_description: string;
   image_url: string;
+  company_name: string;
 }
 
 interface FormState {
@@ -62,6 +63,7 @@ export default function Form({
         page_name: 'Landing page',
         page_description: '',
         image_url: '',
+        company_name: '',
       },
     ]);
 

@@ -13,6 +13,9 @@ interface Company {
   attributes: {
     name: string;
     slug: string;
+    pages: {
+      image_url: string;
+    }[];
   };
 }
 
@@ -61,7 +64,11 @@ const Home: NextPage = () => {
                     <div className="relative">
                       <Image
                         alt="wise"
-                        src={filler}
+                        src={
+                          loadingCompanies
+                            ? filler
+                            : company.attributes.pages[0].image_url
+                        }
                         width={620}
                         height={411}
                         layout="responsive"

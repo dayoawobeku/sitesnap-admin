@@ -72,7 +72,10 @@ export default function Layout({children}: Props) {
           <a className="text-md font-medium text-blue">omoui.design</a>
         </Link>
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            setIsOpen(true);
+            setSearchTerm('');
+          }}
           id="search-btn"
           className="flex h-13 w-full max-w-[648px] items-center justify-between rounded-lg bg-white-200 px-4 font-medium text-body"
         >
