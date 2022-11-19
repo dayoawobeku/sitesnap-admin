@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import axios from 'axios';
+import Image from 'next/image';
 
 interface Data {
   name: string;
@@ -13,6 +14,7 @@ interface Pages {
   page_description: string;
   image_url: string;
   company_name: string;
+  upload_status: string;
 }
 
 interface FormState {
@@ -52,11 +54,7 @@ export default function Form({
   isError,
   isSuccess,
 }: FormState) {
-  const [uploadStatus, setUploadStatus] = useState({
-    status: 'idle',
-    id: 'image-1',
-  });
-  const addNewSection = () => {
+  const addNewPage = () => {
     setPages([
       ...pages,
       {
@@ -64,19 +62,16 @@ export default function Form({
         page_description: '',
         image_url: '',
         company_name: '',
+        upload_status: 'idle',
       },
     ]);
-
-    setUploadStatus({
-      ...uploadStatus,
-      status: 'idle',
-      id: `image-${pages.length + 1}`,
-    });
   };
 
-  const idle = uploadStatus.status === 'idle';
-  const uploading = uploadStatus.status === 'uploading';
-  const success = uploadStatus.status === 'success';
+  const removePage = (index: number) => {
+    if (pages.length > 1) {
+      setPages(pages.filter((_, i) => i !== index));
+    }
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -84,37 +79,39 @@ export default function Form({
     setData({...data, [e.target.name]: e.target.value});
   };
 
-  const handleSectionChange = (name: string, value: string, id: number) => {
-    const updatedSections = pages;
-    updatedSections[id] = {...updatedSections[id], [name]: value};
-    setPages(updatedSections);
+  const handlePageChange = (name: string, value: string, id: number) => {
+    setPages(prevState => {
+      const newState = [...prevState];
+      newState[id][name as keyof Pages] = value;
+      return newState;
+    });
   };
 
   const handleFileUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
     i: number,
   ) => {
-    setUploadStatus({
-      ...uploadStatus,
-      status: 'uploading',
-      id: `image-${i + 1}`,
-    });
     const file = e.target.files?.[0];
     const formData = new FormData();
     formData.append('file', file as Blob);
     formData.append('upload_preset', 'omoui-uploads');
     if (!file) return;
+    setPages(prevState => {
+      const newState = [...prevState];
+      newState[i].upload_status = 'loading';
+      return newState;
+    });
     const res = await axios.post(
       `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_ID}/image/upload`,
       formData,
     );
-    setUploadStatus({
-      ...uploadStatus,
-      status: 'success',
-      id: `image-${i + 1}`,
-    });
     if (res) {
-      handleSectionChange('image_url', res.data.secure_url, i);
+      handlePageChange('image_url', res.data.secure_url, i);
+      setPages(prevState => {
+        const newState = [...prevState];
+        newState[i].upload_status = 'success';
+        return newState;
+      });
     }
   };
 
@@ -178,19 +175,17 @@ export default function Form({
                     className="basis-[48.25%] pt-[14px]"
                     onChange={e => handleFileUpload(e, i)}
                   />
-                  {uploadStatus.id === `image-${i + 1}` && uploading ? (
-                    <p>Uploading</p>
-                  ) : uploadStatus.id === `image-${i + 1}` && idle ? (
-                    ''
-                  ) : uploadStatus.id === `image-${i + 1}` && success ? (
-                    <p>Success</p>
-                  ) : null}
+                  {pageTitle === 'Add a new company'
+                    ? item.upload_status === 'idle'
+                      ? ''
+                      : item.upload_status
+                    : null}
                   <select
                     name="page_name"
                     required
                     className="basis-[51.75%]"
                     onChange={e =>
-                      handleSectionChange(e.target.name, e.target.value, i)
+                      handlePageChange(e.target.name, e.target.value, i)
                     }
                     defaultValue={item.page_name}
                   >
@@ -203,22 +198,31 @@ export default function Form({
                   </select>
                 </div>
 
-                {/* <img
-                  src={item.image_url}
-                  alt={name}
-                  className="mt-2 w-full rounded-lg"
-                /> */}
+                {pageTitle === 'Edit company' ? (
+                  <div className="relative h-[411px] w-full">
+                    <Image
+                      src={item.image_url}
+                      alt={`${item.company_name} - ${item.page_name}`}
+                      layout="fill"
+                      objectFit="cover"
+                      className="mt-2 w-full rounded-lg"
+                    />
+                  </div>
+                ) : null}
 
                 <textarea
                   className="flex h-20 w-full py-4"
                   placeholder="Page description (optional)"
                   name="page_description"
                   onChange={e =>
-                    handleSectionChange(e.target.name, e.target.value, i)
+                    handlePageChange(e.target.name, e.target.value, i)
                   }
                   defaultValue={item.page_description}
                 />
               </div>
+              <button type="button" onClick={() => removePage(i)}>
+                {pages.length > 1 ? 'remove page' : null}
+              </button>
             </section>
           );
         })}
@@ -226,9 +230,9 @@ export default function Form({
 
       <div className="mt-8 flex h-14 basis-full gap-2">
         <button
-          onClick={addNewSection}
+          onClick={addNewPage}
           type="button"
-          className="flex h-14 basis-[25.71%] items-center justify-center rounded-lg bg-white-200 font-medium text-body"
+          className="flex h-14 basis-[25.71%] items-center justify-center rounded-lg bg-white-200 font-medium text-body outline outline-1 outline-white-200 hover:outline-blue"
         >
           Add a new page
         </button>

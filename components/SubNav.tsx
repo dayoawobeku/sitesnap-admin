@@ -6,6 +6,7 @@ interface Pages {
   attributes: {
     pages: string[];
   };
+  page_name: string;
 }
 
 interface Props {
@@ -24,23 +25,29 @@ export default function SubNav({text, customHeading}: Props) {
   const {data: companies} = useCompanies();
   const {data: pages} = usePages();
   const {data: categories} = useCategories();
-  const pagesArray = pages?.data?.map((page: Pages) => page.attributes.pages);
   const industries = categories?.data?.map(
     (category: Category) => category?.attributes?.industry,
   );
-  const industryCount = industries?.reduce(
+  const allIndustries = industries?.reduce(
     (acc: {[x: string]: number}, cat: string | number) => {
       acc[cat] = ++acc[cat] || 1;
       return acc;
     },
     {},
   );
-  const pageCount = pagesArray?.reduce(
+  const industryCount = allIndustries && Object.keys(allIndustries).length;
+
+  const pagesArray = pages?.data?.map((page: Pages) => page.attributes.pages);
+  const flattenedPages = pagesArray?.flat();
+  const pagesCount = flattenedPages?.map((page: Pages) => page.page_name);
+  const allPages = pagesCount?.reduce(
     (acc: {[x: string]: number}, page: string | number) => {
       acc[page] = ++acc[page] || 1;
       return acc;
     },
+    {},
   );
+  const pageCount = allPages && Object.keys(allPages).length;
 
   const categoriesTab = pathname === '/categories' ? 'tab-active' : '';
   const pagesTab = pathname === '/pages' ? 'tab-active' : '';
@@ -57,21 +64,19 @@ export default function SubNav({text, customHeading}: Props) {
       <div className="flex items-center gap-4 font-medium">
         <Link href="/categories">
           <a className={`tab ${categoriesTab}`}>
-            {industryCount && Object.keys(industryCount).length === 1 ? (
+            {industryCount === 1 ? (
               <span>1 Category</span>
             ) : (
-              <span>
-                {industryCount && Object.keys(industryCount).length} Categories
-              </span>
+              <span>{industryCount} Categories</span>
             )}
           </a>
         </Link>
         <Link href="/pages">
           <a className={`tab ${pagesTab}`}>
-            {pageCount && Object.keys(pageCount).length === 1 ? (
+            {pageCount === 1 ? (
               <span>1 Page</span>
             ) : (
-              <span>{pageCount && Object.keys(pageCount).length} Pages</span>
+              <span>{pageCount} Pages</span>
             )}
           </a>
         </Link>

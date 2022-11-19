@@ -7,5 +7,6 @@ export const config = {
     '/add-company',
     '/companies',
     '/companies/:path*',
+    '/pages',
   ],
 };

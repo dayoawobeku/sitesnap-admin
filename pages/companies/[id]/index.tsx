@@ -37,7 +37,7 @@ const Company: NextPage = () => {
               {loadingCompany ? '-' : company.data[0]?.attributes.industry}
             </div>
             <Link href={`/companies/${router.query.id}/edit-company`}>
-              <a className="flex h-14 items-center rounded-lg bg-white-200 px-5 font-medium text-body">
+              <a className="flex h-14 items-center rounded-lg bg-white-200 px-5 font-medium text-body outline outline-1 outline-white-200 hover:outline-blue">
                 Edit
               </a>
             </Link>
@@ -45,7 +45,7 @@ const Company: NextPage = () => {
         }
       />
 
-      <section className="mt-14 grid grid-cols-2 gap-x-12">
+      <section className="card mt-14">
         {loadingCompany
           ? '...'
           : pagesArray?.map((page: Page) => (
@@ -66,6 +66,7 @@ const Company: NextPage = () => {
                     placeholder="blur"
                     blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xg8AAnMBeJQW2OIAAAAASUVORK5CYII="
                     className="rounded-2xl"
+                    objectFit="cover"
                   />
                 </div>
               </article>

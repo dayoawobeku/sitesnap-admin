@@ -19,7 +19,7 @@ export const authOptions: NextAuthOptions = {
           });
           return {...user, jwt};
         } catch (error) {
-          return null;
+          return error;
         }
       },
     }),
@@ -38,6 +38,10 @@ export const authOptions: NextAuthOptions = {
       }
       return Promise.resolve(token);
     },
+  },
+  session: {
+    strategy: 'jwt',
+    // maxAge: 30 * 24 * 60 * 60,
   },
   pages: {
     signIn: '/auth/signin',

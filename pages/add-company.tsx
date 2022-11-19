@@ -34,6 +34,7 @@ const AddCompany: NextPage = () => {
       page_description: '',
       image_url: '',
       company_name: '',
+      upload_status: 'idle',
     },
   ]);
   const [message, setMessage] = useState('');
