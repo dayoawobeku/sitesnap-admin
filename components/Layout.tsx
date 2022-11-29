@@ -69,7 +69,7 @@ export default function Layout({children}: Props) {
     <div className="mx-auto max-w-[1345px] px-4">
       <nav className="flex items-center justify-between py-8">
         <Link href="/">
-          <a className="text-md font-medium text-blue">omoui.design</a>
+          <a className="text-md font-medium text-blue">sitesnap.design</a>
         </Link>
         <button
           onClick={() => {

@@ -1,6 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import Image from 'next/image';
+import Lottie from 'lottie-react';
+import {shapesLottie} from '../assets/lottie';
+import {checkmark} from '../assets/images/images';
+
+const lottieDimension = {
+  height: 56,
+  width: 56,
+};
 
 interface Data {
   name: string;
@@ -175,11 +183,24 @@ export default function Form({
                     className="basis-[48.25%] pt-[14px]"
                     onChange={e => handleFileUpload(e, i)}
                   />
-                  {pageTitle === 'Add a new company'
-                    ? item.upload_status === 'idle'
-                      ? ''
-                      : item.upload_status
-                    : null}
+                  {pageTitle === 'Add a new company' ? (
+                    item.upload_status === 'idle' ? (
+                      ''
+                    ) : item.upload_status === 'loading' ? (
+                      <Lottie
+                        loop={true}
+                        animationData={shapesLottie}
+                        style={lottieDimension}
+                        className="-ml-2"
+                      />
+                    ) : item.upload_status === 'success' ? (
+                      <div className="-ml-2 flex h-6 w-6 items-start">
+                        <Image src={checkmark} alt="" width={24} height={24} />
+                      </div>
+                    ) : (
+                      ''
+                    )
+                  ) : null}
                   <select
                     name="page_name"
                     required

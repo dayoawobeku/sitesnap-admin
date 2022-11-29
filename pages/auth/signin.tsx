@@ -34,7 +34,7 @@ const Auth: NextPage = () => {
       </Head>
 
       <section className="m-auto max-w-[454px] px-4 pt-40 text-center">
-        <p className="text-md font-medium text-blue">omoui.design</p>
+        <p className="text-md font-medium text-blue">sitesnap.design</p>
         <h1 className="my-12 text-xl font-medium text-grey">Admin</h1>
 
         <form onSubmit={onSubmit} className="flex w-full flex-col gap-4">
