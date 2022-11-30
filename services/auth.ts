@@ -8,7 +8,7 @@ interface UserCredentials {
 }
 
 export async function signIn({username, password}: UserCredentials) {
-  const res = await axios.post(`${strapiUrl}/auth/local`, {
+  const res = await axios.post(`${strapiUrl}/api/auth/local`, {
     identifier: username,
     password,
   });
