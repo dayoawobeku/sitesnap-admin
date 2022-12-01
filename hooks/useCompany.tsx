@@ -11,7 +11,7 @@ export function useCompany(slug: Slug['slug']) {
     () =>
       axios
         .get(
-          `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies?filters[slug][$eq]=${slug}`,
+          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/companies?filters[slug][$eq]=${slug}`,
         )
         .then(res => res.data),
     {

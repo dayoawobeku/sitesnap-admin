@@ -5,7 +5,7 @@ export function useCompanies() {
   return useQuery(['companies'], () =>
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies?sort=createdAt:DESC`,
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/companies?sort=createdAt:DESC`,
       )
       .then(res => res.data),
   );

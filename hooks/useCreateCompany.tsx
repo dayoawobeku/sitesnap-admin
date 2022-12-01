@@ -6,7 +6,7 @@ export function useCreateCompany() {
   return useMutation(
     (values: object) =>
       axios
-        .post(`${process.env.NEXT_PUBLIC_STRAPI_URL}/companies`, values)
+        .post(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/companies`, values)
         .then(res => res.data),
     {
       onSuccess: () => {
