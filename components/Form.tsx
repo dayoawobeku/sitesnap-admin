@@ -219,18 +219,16 @@ export default function Form({
                   </select>
                 </div>
 
-                {pageTitle === 'Edit company' ? (
-                  item.image_url ? (
-                    <div className="relative h-[411px] w-full">
-                      <Image
-                        src={item.image_url}
-                        alt={`${item.company_name} - ${item.page_name}`}
-                        layout="fill"
-                        objectFit="cover"
-                        className="mt-2 w-full rounded-lg"
-                      />
-                    </div>
-                  ) : null
+                {item.image_url ? (
+                  <div className="relative h-[411px] w-full">
+                    <Image
+                      src={item.image_url}
+                      alt={`${item.company_name} - ${item.page_name}`}
+                      layout="fill"
+                      objectFit="cover"
+                      className="mt-2 w-full rounded-lg"
+                    />
+                  </div>
                 ) : null}
 
                 <textarea
