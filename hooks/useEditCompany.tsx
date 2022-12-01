@@ -8,7 +8,7 @@ interface Slug {
 export function useEditCompany(id: Slug['slug']) {
   return useMutation((values: object) =>
     axios
-      .put(`${process.env.NEXT_PUBLIC_STRAPI_URL}/companies/${id}`, values)
+      .put(`${process.env.NEXT_PUBLIC_STRAPI_URL}/api/companies/${id}`, values)
       .then(res => res.data),
   );
 }
