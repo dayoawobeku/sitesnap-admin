@@ -19,7 +19,7 @@ export const authOptions: NextAuthOptions = {
           });
           return {...user, jwt};
         } catch (error) {
-          return error;
+          return null;
         }
       },
     }),
