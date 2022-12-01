@@ -8,5 +8,6 @@ export const config = {
     '/companies',
     '/companies/:path*',
     '/pages',
+    '/404',
   ],
 };

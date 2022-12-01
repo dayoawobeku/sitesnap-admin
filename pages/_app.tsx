@@ -22,7 +22,10 @@ function MyApp({
         },
       }),
   );
-  const isLayoutNeeded = ['/auth/signin'].includes(appProps.router.pathname);
+
+  const isLayoutNeeded = ['/auth/signin', '/404'].includes(
+    appProps.router.pathname,
+  );
 
   const LayoutComponent = !isLayoutNeeded ? Layout : React.Fragment;
 

@@ -63,6 +63,9 @@ const EditCompany: NextPage = () => {
       {
         onSuccess: () => {
           setMessage('Company updated successfully.');
+          setTimeout(() => {
+            router.push(`/companies/${data.slug}`);
+          }, 2000);
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onError: (error: any) => {
