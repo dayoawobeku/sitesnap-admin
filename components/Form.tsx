@@ -183,24 +183,24 @@ export default function Form({
                     className="basis-[48.25%] pt-[14px]"
                     onChange={e => handleFileUpload(e, i)}
                   />
-                  {pageTitle === 'Add a new company' ? (
-                    item.upload_status === 'idle' ? (
-                      ''
-                    ) : item.upload_status === 'loading' ? (
+                  {item.upload_status === 'idle' ? (
+                    ''
+                  ) : item.upload_status === 'loading' ? (
+                    (disabled = true) && (
                       <Lottie
                         loop={true}
                         animationData={shapesLottie}
                         style={lottieDimension}
                         className="-ml-2"
                       />
-                    ) : item.upload_status === 'success' ? (
-                      <div className="-ml-2 flex h-6 w-6 items-start">
-                        <Image src={checkmark} alt="" width={24} height={24} />
-                      </div>
-                    ) : (
-                      ''
                     )
-                  ) : null}
+                  ) : item.upload_status === 'success' ? (
+                    <div className="-ml-2 flex h-6 w-6 items-start">
+                      <Image src={checkmark} alt="" width={24} height={24} />
+                    </div>
+                  ) : (
+                    ''
+                  )}
                   <select
                     name="page_name"
                     required
@@ -220,15 +220,17 @@ export default function Form({
                 </div>
 
                 {pageTitle === 'Edit company' ? (
-                  <div className="relative h-[411px] w-full">
-                    <Image
-                      src={item.image_url}
-                      alt={`${item.company_name} - ${item.page_name}`}
-                      layout="fill"
-                      objectFit="cover"
-                      className="mt-2 w-full rounded-lg"
-                    />
-                  </div>
+                  item.image_url ? (
+                    <div className="relative h-[411px] w-full">
+                      <Image
+                        src={item.image_url}
+                        alt={`${item.company_name} - ${item.page_name}`}
+                        layout="fill"
+                        objectFit="cover"
+                        className="mt-2 w-full rounded-lg"
+                      />
+                    </div>
+                  ) : null
                 ) : null}
 
                 <textarea
