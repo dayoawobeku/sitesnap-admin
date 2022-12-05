@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Lottie from 'lottie-react';
 import {shapesLottie} from '../assets/lottie';
 import {checkmark} from '../assets/images/images';
-import {INDUSTRIES} from '../helpers';
+import {INDUSTRIES, PAGES} from '../helpers';
 
 const lottieDimension = {
   height: 56,
@@ -39,12 +39,6 @@ interface FormState {
   onSubmit: (e: React.MouseEvent<HTMLFormElement, MouseEvent>) => void;
 }
 
-const PAGES = [
-  {value: 'Landing page', label: 'Landing page'},
-  {value: 'About page', label: 'About page'},
-  {value: 'Contact page', label: 'Contact page'},
-];
-
 export default function Form({
   data,
   setData,
@@ -61,7 +55,7 @@ export default function Form({
     setPages([
       ...pages,
       {
-        page_name: 'Landing page',
+        page_name: 'Homepage & Landing page',
         page_description: '',
         image_url: '',
         company_name: '',
