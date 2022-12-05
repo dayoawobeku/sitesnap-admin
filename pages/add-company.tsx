@@ -61,6 +61,7 @@ const AddCompany: NextPage = () => {
         })),
       ],
       slug: companyData.name.toLowerCase().replace(/ /g, '-'),
+      publishedAt: null,
     };
 
     createCompany(
@@ -68,9 +69,9 @@ const AddCompany: NextPage = () => {
       {
         onSuccess: () => {
           setMessage('Company created successfully');
-          setTimeout(() => {
-            router.push(`/companies/${data.slug}`);
-          }, 2000);
+          // setTimeout(() => {
+          //   router.push(`/companies/${data.slug}`);
+          // }, 2000);
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onError: (error: any) => {
