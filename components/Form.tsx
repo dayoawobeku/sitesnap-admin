@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Lottie from 'lottie-react';
 import {shapesLottie} from '../assets/lottie';
 import {checkmark} from '../assets/images/images';
+import {INDUSTRIES} from '../helpers';
 
 const lottieDimension = {
   height: 56,
@@ -42,12 +43,6 @@ const PAGES = [
   {value: 'Landing page', label: 'Landing page'},
   {value: 'About page', label: 'About page'},
   {value: 'Contact page', label: 'Contact page'},
-];
-
-const INDUSTRIES = [
-  {value: 'Fintech', label: 'Fintech'},
-  {value: 'Healthtech', label: 'Healthtech'},
-  {value: 'Onboarding', label: 'Onboarding'},
 ];
 
 export default function Form({

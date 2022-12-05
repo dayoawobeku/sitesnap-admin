@@ -36,7 +36,6 @@ const Company: NextPage = () => {
     company?.data[0]?.id,
   );
 
-  console.log(company?.data[0]?.id);
   const handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
 
