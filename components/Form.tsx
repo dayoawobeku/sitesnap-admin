@@ -241,9 +241,12 @@ export default function Form({
                   defaultValue={item.page_description}
                 />
               </div>
-              <button type="button" onClick={() => removePage(i)}>
-                {pages.length > 1 ? 'remove page' : null}
-              </button>
+
+              {pages.length > 1 ? (
+                <button type="button" onClick={() => removePage(i)}>
+                  {pages.length > 1 ? 'remove page' : null}
+                </button>
+              ) : null}
             </section>
           );
         })}
@@ -253,7 +256,7 @@ export default function Form({
         <button
           onClick={addNewPage}
           type="button"
-          className="flex h-14 basis-[25.71%] items-center justify-center rounded-lg bg-white-200 font-medium text-body outline outline-1 outline-white-200 hover:outline-blue"
+          className="flex basis-[25.71%] items-center justify-center rounded-lg bg-white-200 font-medium text-body outline outline-[2.5px] outline-white-200 focus-within:outline-blue hover:outline-blue focus-visible:outline-blue"
         >
           Add a new page
         </button>

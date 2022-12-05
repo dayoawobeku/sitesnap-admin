@@ -16,6 +16,7 @@ interface Company {
     pages: {
       image_url: string;
     }[];
+    publishedAt: string;
   };
 }
 
@@ -58,9 +59,18 @@ const Home: NextPage = () => {
               >
                 <a>
                   <article className="flex flex-col gap-5 py-14">
-                    <h2 className="text-md font-medium text-grey">
-                      {company.attributes.name}
-                    </h2>
+                    <div className="flex items-center gap-3">
+                      <h2 className="text-md font-medium text-grey">
+                        {company.attributes.name}
+                      </h2>
+                      {company.attributes.publishedAt === null ? (
+                        <span className="rounded-lg bg-blue p-1 text-[10px] text-white">
+                          {company.attributes.publishedAt === null
+                            ? 'Draft'
+                            : ''}
+                        </span>
+                      ) : null}
+                    </div>
                     <div className="relative">
                       <Image
                         alt="wise"

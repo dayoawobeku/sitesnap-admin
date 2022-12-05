@@ -5,7 +5,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import SubNav from '../../../components/SubNav';
 import {filler} from '../../../assets/images/images';
-import {useCompany} from '../../../hooks';
+import {useCompany, useEditCompany} from '../../../hooks';
+import {useState} from 'react';
+import {useQueryClient} from '@tanstack/react-query';
+
+interface ErrorMessage {
+  message: string;
+  path: string;
+}
 
 interface Page {
   page_name: string;
@@ -15,11 +22,55 @@ interface Page {
 
 const Company: NextPage = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const {data: company, isLoading: loadingCompany} = useCompany(
     router.query.id,
   );
+  const [message, setMessage] = useState('');
 
   const pagesArray = company?.data[0]?.attributes?.pages;
+
+  // when the user clicks on the publish button, the company is published
+
+  const {mutate: editCompany, isLoading: creatingCompany} = useEditCompany(
+    company?.data[0]?.id,
+  );
+
+  console.log(company?.data[0]?.id);
+  const handleSubmit = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const data = {
+      name: company?.data[0]?.attributes?.name,
+      url: company?.data[0]?.attributes?.url,
+      description: company?.data[0]?.attributes?.description,
+      industry: company?.data[0]?.attributes?.industry,
+      pages: pagesArray,
+      slug: company?.data[0]?.attributes?.slug,
+      publishedAt: new Date().toISOString(),
+    };
+
+    editCompany(
+      {data: data},
+      {
+        onSuccess: () => {
+          setMessage('Company published successfully');
+          setTimeout(() => {
+            queryClient.invalidateQueries([`company-${router.query.id}`]);
+            setMessage('');
+          }, 2000);
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onError: (error: any) => {
+          setMessage(
+            error?.response?.data.error.details.errors
+              .map((e: ErrorMessage) => `${e.message}  [${e.path}]`)
+              .join(' & '),
+          );
+        },
+      },
+    );
+  };
 
   return (
     <>
@@ -41,6 +92,25 @@ const Company: NextPage = () => {
                 Edit
               </a>
             </Link>
+            {company?.data[0]?.attributes?.publishedAt === null ? (
+              <button
+                disabled={creatingCompany}
+                onClick={handleSubmit}
+                className="h-14 rounded-lg bg-blue px-5 font-medium text-white"
+              >
+                Publish
+              </button>
+            ) : null}
+
+            <a
+              className="font-medium text-blue"
+              target="_blank"
+              rel="noreferrer"
+              href={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/api/preview?secret=${process.env.NEXT_PUBLIC_PREVIEW_TOKEN}&slug=/companies/${company?.data[0]?.attributes?.slug}`}
+            >
+              Preview
+            </a>
+            {message}
           </div>
         }
       />
