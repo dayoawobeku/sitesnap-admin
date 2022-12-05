@@ -17,6 +17,7 @@ const EditCompany: NextPage = () => {
     router.query.id,
   );
   const companyId = company?.data[0]?.id;
+  console.log(companyId);
   const {
     mutate: editCompany,
     isLoading: editingCompany,
