@@ -30,7 +30,7 @@ const AddCompany: NextPage = () => {
   });
   const [pages, setPages] = useState([
     {
-      page_name: 'Landing page',
+      page_name: 'Homepage & Landing page',
       page_description: '',
       image_url: '',
       company_name: '',
