@@ -1,7 +1,7 @@
 import type {NextPage} from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import SubNav from '../../components/SubNav';
+import {SubNav} from '../../components';
 import {useCompanies} from '../../hooks';
 
 interface Company {

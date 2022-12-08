@@ -1,12 +1,11 @@
 import {useEffect} from 'react';
 import type {NextPage} from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
+import Image, {StaticImageData} from 'next/image';
 import Link from 'next/link';
 import {useSession} from 'next-auth/react';
-import SubNav from '../components/SubNav';
-import {filler} from '../assets/images/images';
 import {useCompanies} from '../hooks';
+import {Card, SubNav} from '../components';
 
 interface Company {
   id: string;
@@ -14,7 +13,7 @@ interface Company {
     name: string;
     slug: string;
     pages: {
-      image_url: string;
+      image_url: StaticImageData;
     }[];
     publishedAt: string;
   };
@@ -71,23 +70,11 @@ const Home: NextPage = () => {
                         </span>
                       ) : null}
                     </div>
-                    <div className="relative">
-                      <Image
-                        alt="wise"
-                        src={
-                          loadingCompanies
-                            ? filler
-                            : company.attributes.pages[0].image_url
-                        }
-                        width={620}
-                        height={411}
-                        layout="responsive"
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xg8AAnMBeJQW2OIAAAAASUVORK5CYII="
-                        className="rounded-2xl"
-                        objectFit="cover"
-                      />
-                    </div>
+                    <Card
+                      image_data={company.attributes.pages[0].image_url}
+                      src={company.attributes.pages[0].image_url}
+                      alt=""
+                    />
                   </article>
                 </a>
               </Link>
