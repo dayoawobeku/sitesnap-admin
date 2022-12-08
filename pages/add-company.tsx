@@ -2,10 +2,10 @@ import {useEffect, useState} from 'react';
 import type {NextPage} from 'next';
 import Head from 'next/head';
 import {useSession} from 'next-auth/react';
-import SubNav from '../components/SubNav';
-import Form from '../components/Form';
+import {v4 as uuidv4} from 'uuid';
 import {useCreateCompany} from '../hooks';
 import {useRouter} from 'next/router';
+import {Form, SubNav} from '../components';
 
 interface ErrorMessage {
   message: string;
@@ -35,6 +35,7 @@ const AddCompany: NextPage = () => {
       image_url: '',
       company_name: '',
       upload_status: 'idle',
+      page_id: uuidv4(),
     },
   ]);
   const [message, setMessage] = useState('');

@@ -43,10 +43,8 @@ html {
   .grey-btn {
     @apply outline outline-1 outline-white-200 transition-all hover:outline-blue;
   }
-}
 
-.card {
-  display: grid;
-  column-gap: 48px;
-  grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
+  .card {
+    @apply grid grid-cols-1 gap-x-4 gap-y-6 md:grid-cols-2 lg:gap-x-12;
+  }
 }

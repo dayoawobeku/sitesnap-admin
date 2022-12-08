@@ -1,6 +1,6 @@
 import type {NextPage} from 'next';
 import Head from 'next/head';
-import SubNav from '../components/SubNav';
+import {SubNav} from '../components';
 import {usePages} from '../hooks';
 
 interface Pages {
