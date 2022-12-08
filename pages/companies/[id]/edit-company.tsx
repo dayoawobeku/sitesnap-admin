@@ -2,9 +2,9 @@ import {useEffect, useState} from 'react';
 import type {NextPage} from 'next';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import SubNav from '../../../components/SubNav';
-import Form from '../../../components/Form';
+import {v4 as uuidv4} from 'uuid';
 import {useCompany, useEditCompany} from '../../../hooks';
+import {Form, SubNav} from '../../../components';
 
 interface ErrorMessage {
   message: string;
@@ -17,7 +17,6 @@ const EditCompany: NextPage = () => {
     router.query.id,
   );
   const companyId = company?.data[0]?.id;
-  console.log(companyId);
   const {
     mutate: editCompany,
     isLoading: editingCompany,
@@ -55,7 +54,13 @@ const EditCompany: NextPage = () => {
       url: companyData.url,
       description: companyData.description,
       industry: companyData.industry,
-      pages: pages,
+      pages: [
+        ...pages.map((page: {page_id: string; page_name: string}) => ({
+          ...page,
+          page_id: page.page_id ?? uuidv4(),
+          company_name: companyData.name,
+        })),
+      ],
       slug: companyData.name.toLowerCase().replace(/ /g, '-'),
     };
 

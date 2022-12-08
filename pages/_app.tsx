@@ -4,8 +4,8 @@ import {SessionProvider} from 'next-auth/react';
 import {Session} from 'next-auth';
 import {QueryClientProvider, QueryClient} from '@tanstack/react-query';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
-import Layout from '../components/Layout';
 import '../styles/globals.css';
+import {Layout} from '../components';
 
 function MyApp({
   Component,

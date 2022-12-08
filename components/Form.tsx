@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import Lottie from 'lottie-react';
+import {v4 as uuidv4} from 'uuid';
 import {shapesLottie} from '../assets/lottie';
 import {checkmark} from '../assets/images/images';
 import {INDUSTRIES, PAGES} from '../helpers';
@@ -24,6 +25,7 @@ interface Pages {
   image_url: string;
   company_name: string;
   upload_status: string;
+  page_id: string;
 }
 
 interface FormState {
@@ -60,6 +62,7 @@ export default function Form({
         image_url: '',
         company_name: '',
         upload_status: 'idle',
+        page_id: uuidv4(),
       },
     ]);
   };
@@ -163,7 +166,7 @@ export default function Form({
       <div className="mt-8 flex flex-col gap-14">
         {pages?.map((item, i) => {
           return (
-            <section key={i}>
+            <section key={item.page_id ?? i}>
               <div className="flex flex-col gap-4">
                 <div className="flex basis-full gap-4">
                   <input
