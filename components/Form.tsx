@@ -94,7 +94,10 @@ export default function Form({
     const file = e.target.files?.[0];
     const formData = new FormData();
     formData.append('file', file as Blob);
-    formData.append('upload_preset', 'omoui-uploads');
+    formData.append(
+      'upload_preset',
+      process.env.NEXT_PUBLIC_UPLOAD_PRESET as string,
+    );
     if (!file) return;
     setPages(prevState => {
       const newState = [...prevState];

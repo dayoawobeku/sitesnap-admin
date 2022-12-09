@@ -39,7 +39,6 @@ const AddCompany: NextPage = () => {
     },
   ]);
   const [message, setMessage] = useState('');
-
   const {
     mutate: createCompany,
     isLoading: creatingCompany,
