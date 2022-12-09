@@ -39,7 +39,7 @@ const Pages: NextPage = () => {
 
       <SubNav text="Pages" />
 
-      <section className="mt-8 flex">
+      <section className="mt-8 grid grid-cols-5">
         {sortedPages?.map((page: Pages) => (
           <p key={Math.random()} className="px-10 py-4 text-md font-medium">
             {page?.[0]} ({page?.[1]})

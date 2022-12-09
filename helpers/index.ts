@@ -27,4 +27,11 @@ const PAGES = [
   {value: 'Create account & Sign up', label: 'Create account & Sign up'},
 ];
 
-export {INDUSTRIES, PAGES};
+function slugify(string: string) {
+  return string
+    .toLowerCase()
+    .replace(/[^\w ]+/g, '')
+    .replace(/ +/g, '-');
+}
+
+export {INDUSTRIES, PAGES, slugify};
