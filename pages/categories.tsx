@@ -33,7 +33,7 @@ const Categories: NextPage = () => {
 
       <SubNav text="Categories" />
 
-      <section className="mt-8 flex">
+      <section className="mt-8 grid grid-cols-5">
         {sortedIndustries?.map(
           (industry: (string | number | null | undefined)[]) => (
             <p key={Math.random()} className="px-10 py-4 text-md font-medium">
