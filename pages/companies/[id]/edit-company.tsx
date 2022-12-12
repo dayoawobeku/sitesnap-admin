@@ -6,6 +6,12 @@ import {v4 as uuidv4} from 'uuid';
 import {useCompany, useEditCompany} from '../../../hooks';
 import {Form, SubNav} from '../../../components';
 
+interface Page {
+  thumbnail_url: string;
+  image_url: string;
+  page_id: string;
+  page_name: string;
+}
 interface ErrorMessage {
   message: string;
   path: string;
@@ -55,10 +61,25 @@ const EditCompany: NextPage = () => {
       description: companyData.description,
       industry: companyData.industry,
       pages: [
-        ...pages.map((page: {page_id: string; page_name: string}) => ({
+        ...pages.map((page: Page) => ({
           ...page,
-          page_id: page.page_id ?? uuidv4(),
+          page_id: page.page_id
+            ? page.page_id.slice(0, 8)
+            : uuidv4().slice(0, 8),
           company_name: companyData.name,
+          image_url: page.image_url.includes('upload/q_auto,f_auto')
+            ? page.image_url
+            : page.image_url.replace('upload/', 'upload/q_auto,f_auto/'),
+          thumbnail_url:
+            page.thumbnail_url &&
+            page.thumbnail_url.includes(
+              'upload/e_sharpen:200,q_auto,f_auto,w_620,h_411,c_thumb,g_north_west/',
+            )
+              ? page.thumbnail_url
+              : page.image_url.replace(
+                  'upload/',
+                  'upload/e_sharpen:200,q_auto,f_auto,w_620,h_411,c_thumb,g_north_west/',
+                ),
         })),
       ],
       slug: companyData.name.toLowerCase().replace(/ /g, '-'),
