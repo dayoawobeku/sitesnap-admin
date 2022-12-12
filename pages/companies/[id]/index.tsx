@@ -17,7 +17,7 @@ interface ErrorMessage {
 interface Page {
   page_name: string;
   page_url: string;
-  image_url: StaticImageData;
+  thumbnail_url: StaticImageData;
   page_id?: string;
 }
 
@@ -127,8 +127,8 @@ const Company: NextPage = () => {
                   {page?.page_name}
                 </h2>
                 <Card
-                  image_data={page?.image_url}
-                  src={page?.image_url}
+                  image_data={page?.thumbnail_url}
+                  src={page?.thumbnail_url}
                   alt=""
                 />
               </article>
