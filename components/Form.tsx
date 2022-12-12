@@ -227,10 +227,10 @@ export default function Form({
                   </select>
                 </div>
 
-                {item.image_url ? (
+                {item.thumbnail_url ? (
                   <div className="relative h-[411px] w-full">
                     <Image
-                      src={item.image_url}
+                      src={item.thumbnail_url}
                       alt={`${item.company_name} - ${item.page_name}`}
                       layout="fill"
                       objectFit="cover"
