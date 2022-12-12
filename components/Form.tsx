@@ -87,7 +87,7 @@ export default function Form({
       return newState;
     });
   };
-
+  console.log(pages);
   const handleFileUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
     i: number,
