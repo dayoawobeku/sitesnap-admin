@@ -115,7 +115,7 @@ export default function Form({
       );
       const thumbnail = res.data.secure_url.replace(
         'upload/', // cloudinary thumbnail optimization
-        'upload/e_sharpen:200,q_auto,f_auto,w_620,h_411,c_thumb,g_north_west/',
+        'upload/e_sharpen:100,q_auto,f_auto,w_620,h_411,c_thumb,g_north_west/',
       );
 
       setPages(prevState => {
