@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react';
 import type {NextPage} from 'next';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import {v4 as uuidv4} from 'uuid';
 import {useCompany, useEditCompany} from '../../../hooks';
 import {Form, SubNav} from '../../../components';
 
