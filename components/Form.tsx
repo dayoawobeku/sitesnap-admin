@@ -26,6 +26,7 @@ interface Pages {
   company_name: string;
   upload_status: string;
   page_id: string;
+  thumbnail_url: string;
 }
 
 interface FormState {
@@ -62,7 +63,8 @@ export default function Form({
         image_url: '',
         company_name: '',
         upload_status: 'idle',
-        page_id: uuidv4(),
+        page_id: uuidv4().slice(0, 8),
+        thumbnail_url: '',
       },
     ]);
   };
@@ -72,7 +74,6 @@ export default function Form({
       setPages(pages.filter((_, i) => i !== index));
     }
   };
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -109,9 +110,19 @@ export default function Form({
       formData,
     );
     if (res) {
-      handlePageChange('image_url', res.data.secure_url, i);
+      const url = res.data.secure_url.replace(
+        'upload/', // cloudinary image optimization
+        'upload/q_auto,f_auto/',
+      );
+      const thumbnail = res.data.secure_url.replace(
+        'upload/', // cloudinary thumbnail optimization
+        'upload/e_sharpen:200,q_auto,f_auto,w_620,h_411,c_thumb,g_north_west/',
+      );
+
       setPages(prevState => {
         const newState = [...prevState];
+        newState[i].image_url = url;
+        newState[i].thumbnail_url = thumbnail;
         newState[i].upload_status = 'success';
         return newState;
       });
@@ -129,6 +140,7 @@ export default function Form({
           name="name"
           onChange={handleChange}
           defaultValue={data?.name}
+          required
         />
         <input
           type="url"
@@ -146,6 +158,7 @@ export default function Form({
         name="description"
         onChange={handleChange}
         defaultValue={data?.description}
+        required
       />
       <select
         id="industry"

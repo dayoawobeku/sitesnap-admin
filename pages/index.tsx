@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import type {NextPage} from 'next';
 import Head from 'next/head';
-import Image, {StaticImageData} from 'next/image';
+import {StaticImageData} from 'next/image';
 import Link from 'next/link';
 import {useSession} from 'next-auth/react';
 import {useCompanies} from '../hooks';
@@ -13,7 +13,7 @@ interface Company {
     name: string;
     slug: string;
     pages: {
-      image_url: StaticImageData;
+      thumbnail_url: StaticImageData;
     }[];
     publishedAt: string;
   };
@@ -71,8 +71,8 @@ const Home: NextPage = () => {
                       ) : null}
                     </div>
                     <Card
-                      image_data={company.attributes.pages[0].image_url}
-                      src={company.attributes.pages[0].image_url}
+                      image_data={company.attributes.pages[0].thumbnail_url}
+                      src={company.attributes.pages[0].thumbnail_url}
                       alt=""
                     />
                   </article>
