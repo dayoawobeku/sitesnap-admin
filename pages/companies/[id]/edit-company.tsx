@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react';
 import type {NextPage} from 'next';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
-import {v4 as uuidv4} from 'uuid';
 import {useCompany, useEditCompany} from '../../../hooks';
 import {Form, SubNav} from '../../../components';
 
@@ -63,23 +62,7 @@ const EditCompany: NextPage = () => {
       pages: [
         ...pages.map((page: Page) => ({
           ...page,
-          page_id: page.page_id
-            ? page.page_id.slice(0, 8)
-            : uuidv4().slice(0, 8),
           company_name: companyData.name,
-          image_url: page.image_url.includes('upload/q_auto,f_auto')
-            ? page.image_url
-            : page.image_url.replace('upload/', 'upload/q_auto,f_auto/'),
-          thumbnail_url:
-            page.thumbnail_url &&
-            page.thumbnail_url.includes(
-              'upload/e_sharpen:200,q_auto,f_auto,w_620,h_411,c_thumb,g_north_west/',
-            )
-              ? page.thumbnail_url
-              : page.image_url.replace(
-                  'upload/',
-                  'upload/e_sharpen:200,q_auto,f_auto,w_620,h_411,c_thumb,g_north_west/',
-                ),
         })),
       ],
       slug: companyData.name.toLowerCase().replace(/ /g, '-'),
