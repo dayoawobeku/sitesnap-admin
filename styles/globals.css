@@ -21,7 +21,7 @@ html {
   }
 
   select {
-    @apply h-14 appearance-none bg-white-200 bg-[url('../assets/images/caret-down.svg')] bg-[center_right_1rem] bg-no-repeat;
+    @apply h-14 appearance-none bg-white-200 bg-[center_right_1rem] bg-no-repeat;
   }
 
   label {
@@ -47,4 +47,8 @@ html {
   .card {
     @apply grid grid-cols-1 gap-x-4 gap-y-6 md:grid-cols-2 lg:gap-x-12;
   }
+}
+
+select {
+  background-image: url('../assets/images/caret-down.svg');
 }
