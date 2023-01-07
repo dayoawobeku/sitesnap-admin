@@ -10,6 +10,12 @@ const INDUSTRIES = [
   {value: 'Portfolio', label: 'Portfolio'},
   {value: 'NGO', label: 'NGO'},
   {value: 'Blog', label: 'Blog'},
+  {value: 'Automotive', label: 'Automotive'},
+  {value: 'Manufacturing', label: 'Manufacturing'},
+  {value: 'Property', label: 'Property'},
+  {value: 'Web3', label: 'Web3'},
+  {value: 'Virtual Reality', label: 'Virtual Reality'},
+  {value: 'Augmented Reality', label: 'Augmented Reality'},
 ];
 
 const PAGES = [
@@ -25,12 +31,6 @@ const PAGES = [
   {value: 'Frequently Asked (FAQ)', label: 'Frequently Asked (FAQ)'},
   {value: 'Login & Sign in', label: 'Login & Sign in'},
   {value: 'Create account & Sign up', label: 'Create account & Sign up'},
-  {value: 'Automotive', label: 'Automotive'},
-  {value: 'Manufacturing', label: 'Manufacturing'},
-  {value: 'Property', label: 'Property'},
-  {value: 'Web3', label: 'Web3'},
-  {value: 'Virtual Reality', label: 'Virtual Reality'},
-  {value: 'Augmented Reality', label: 'Augmented Reality'},
 ];
 
 function slugify(string: string) {
