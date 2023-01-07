@@ -50,5 +50,5 @@ html {
 }
 
 select {
-  background-image: url('../assets/images/caret-down.svg');
+  background-image: url('/images/caret-down.svg');
 }
