@@ -1,6 +1,6 @@
 import React from 'react';
 import Image, {StaticImageData} from 'next/image';
-import {filler} from '../assets/images/images';
+import {filler} from '../assets/images';
 
 interface Props {
   src: StaticImageData;

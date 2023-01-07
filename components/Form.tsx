@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Lottie from 'lottie-react';
 import {v4 as uuidv4} from 'uuid';
 import {shapesLottie} from '../assets/lottie';
-import {checkmark} from '../assets/images/images';
+import {checkmark} from '../assets/images';
 import {INDUSTRIES, PAGES} from '../helpers';
 
 const lottieDimension = {

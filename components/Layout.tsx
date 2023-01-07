@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {signOut} from 'next-auth/react';
 import Fuse from 'fuse.js';
 const _debounce = require('lodash.debounce');
-import {search} from '../assets/images/images';
+import {search} from '../assets/images';
 import {useCompanies} from '../hooks';
 import Modal from './Modal';
 
