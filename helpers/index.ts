@@ -33,6 +33,8 @@ const PAGES = [
   {value: 'Frequently Asked (FAQ)', label: 'Frequently Asked (FAQ)'},
   {value: 'Login & Sign in', label: 'Login & Sign in'},
   {value: 'Create account & Sign up', label: 'Create account & Sign up'},
+  {value: 'Privacy Policy', label: 'Privacy Policy'},
+  {value: 'Terms and Conditions', label: 'Terms and Conditions'},
 ];
 
 function slugify(string: string) {
