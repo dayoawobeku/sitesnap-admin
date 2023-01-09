@@ -16,6 +16,8 @@ const INDUSTRIES = [
   {value: 'Web3', label: 'Web3'},
   {value: 'Virtual Reality', label: 'Virtual Reality'},
   {value: 'Augmented Reality', label: 'Augmented Reality'},
+  {value: 'Transportation', label: 'Transportation'},
+  {value: 'Agency', label: 'Agency'},
 ];
 
 const PAGES = [
