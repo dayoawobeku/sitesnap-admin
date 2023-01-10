@@ -55,7 +55,7 @@ const EditCompany: NextPage = () => {
     e.preventDefault();
 
     const data = {
-      name: companyData.name,
+      name: companyData.name.trim(),
       url: companyData.url,
       description: companyData.description,
       industry: companyData.industry,
@@ -65,7 +65,7 @@ const EditCompany: NextPage = () => {
           company_name: companyData.name,
         })),
       ],
-      slug: companyData.name.toLowerCase().replace(/ /g, '-'),
+      slug: companyData.name.trim().toLowerCase().replace(/ /g, '-'),
     };
 
     editCompany(
