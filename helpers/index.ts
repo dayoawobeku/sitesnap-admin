@@ -18,6 +18,8 @@ const INDUSTRIES = [
   {value: 'Augmented Reality', label: 'Augmented Reality'},
   {value: 'Transportation', label: 'Transportation'},
   {value: 'Agency', label: 'Agency'},
+  {value: 'Agriculture', label: 'Agriculture'},
+  {value: 'Energy', label: 'Energy'},
 ];
 
 const PAGES = [
