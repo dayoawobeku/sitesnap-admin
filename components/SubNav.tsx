@@ -82,10 +82,10 @@ export default function SubNav({text, customHeading}: Props) {
         </Link>
         <Link href="/companies">
           <a className={`tab ${companiesTab}`}>
-            {companies?.data?.length === 1 ? (
+            {companies?.meta?.pagination?.total === 1 ? (
               <span>1 Company</span>
             ) : (
-              <span>{companies?.data?.length} Companies</span>
+              <span>{companies?.meta?.pagination?.total} Companies</span>
             )}
           </a>
         </Link>
