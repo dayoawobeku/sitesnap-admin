@@ -28,7 +28,15 @@ export default function Card({src, onClick, image_data, alt}: Props) {
             onClick={onClick}
           />
         </div>
-      ) : null}
+      ) : (
+        <Image
+          alt=""
+          src={filler}
+          width={620}
+          height={411}
+          layout="responsive"
+        />
+      )}
     </>
   );
 }
