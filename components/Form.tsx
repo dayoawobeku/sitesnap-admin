@@ -101,8 +101,16 @@ export default function Form({
     if (!file) return;
     setPages(prevState => {
       const newState = [...prevState];
-      newState[i].upload_status = 'loading';
-      return newState;
+      const updatedPages = newState.map((page, index) => {
+        if (index === i) {
+          return {
+            ...page,
+            upload_status: 'loading',
+          };
+        }
+        return page;
+      });
+      return updatedPages;
     });
     const res = await axios.post(
       `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_ID}/image/upload`,
@@ -120,10 +128,18 @@ export default function Form({
 
       setPages(prevState => {
         const newState = [...prevState];
-        newState[i].image_url = url;
-        newState[i].thumbnail_url = thumbnail;
-        newState[i].upload_status = 'success';
-        return newState;
+        const updatedPages = newState.map((page, index) => {
+          if (index === i) {
+            return {
+              ...page,
+              image_url: url,
+              thumbnail_url: thumbnail,
+              upload_status: 'success',
+            };
+          }
+          return page;
+        });
+        return updatedPages;
       });
     }
   };
