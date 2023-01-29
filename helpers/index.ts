@@ -21,6 +21,8 @@ const INDUSTRIES = [
   {value: 'Agriculture', label: 'Agriculture'},
   {value: 'Energy', label: 'Energy'},
   {value: 'Hospitality and Travel', label: 'Hospitality and Travel'},
+  {value: 'Music', label: 'Music'},
+  {value: 'Cryptocurrency', label: 'Cryptocurrency'},
 ];
 
 const PAGES = [
